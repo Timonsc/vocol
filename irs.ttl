@@ -1,0 +1,171 @@
+# File irs.ttl
+# Base Vocabulary (RDF Schema): classes and properties and sub-classes-of relationships
+
+@prefix :	<http://www.irefact.com/2021/03/10/irefact-syntax#> .
+@prefix rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:	<http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix sh:	<http://www.w3.org/ns/shacl#> .
+@prefix xsd:	<http://www.w3.org/2001/XMLSchema#> .
+<http://www.irefact.com/2021/03/10/irefact-syntax#> rdf:type owl:Ontology .
+
+:branch_of_workspace rdf:type owl:ObjectProperty ;
+          rdfs:domain :Branch ;
+          rdfs:range :Workspace .
+
+:namespace_isPartOf_branch rdf:type owl:ObjectProperty ;
+          rdfs:domain :Namespace ;
+          rdfs:range :Branch .
+
+:type_isPartOf_branch rdf:type owl:ObjectProperty ;
+          rdfs:domain :Type ;
+          rdfs:range :Branch .
+
+:type_in_namespace rdf:type owl:ObjectProperty ;
+          rdfs:domain :Type ;
+          rdfs:range :Namespace .
+
+:attribute_isPartOf_branch rdf:type owl:ObjectProperty ;
+          rdfs:domain :Attribute ;
+          rdfs:range :Branch .
+
+:attribute_isPartOf_complexType rdf:type owl:ObjectProperty ;
+          rdfs:domain :Attribute ;
+          rdfs:range :Entity .
+
+:attribute_isOf_type rdf:type owl:ObjectProperty ;
+          rdfs:domain :Attribute ;
+          rdfs:range :DataType .
+
+#################################################################
+#    Data properties
+#################################################################
+:id rdf:type owl:DatatypeProperty ;
+    rdf:range xsd:integer .
+
+:code rdf:type owl:DatatypeProperty ;
+    rdf:range xsd:string .
+
+:description rdf:type owl:DatatypeProperty ;
+    rdf:range xsd:string .
+
+:annotation rdf:type owl:DatatypeProperty ;
+    rdf:range xsd:string .
+
+:isPublished rdf:type owl:DatatypeProperty ;
+    rdf:range xsd:boolean .
+
+:branchId rdf:type owl:DatatypeProperty ;
+    rdf:range xsd:integer .
+
+:isComplexType rdf:type owl:DatatypeProperty ;
+    rdf:range xsd:boolean .
+
+:isPartOfTypeId rdf:type owl:DatatypeProperty ;
+    rdf:range xsd:integer .
+
+:_version rdf:type owl:DatatypeProperty ;
+    rdf:range xsd:integer .
+
+:_createdBy rdf:type owl:DatatypeProperty ;
+    rdf:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+:Branch rdf:type owl:Class .
+
+:Workspace rdf:type owl:Class .
+
+:Namespace rdf:type owl:Class .
+
+:Type rdf:type owl:Class .
+
+:DataType rdf:type owl:Class ;
+          rdfs:subClassOf :Type .
+
+:Entity rdf:type owl:Class ;
+        rdfs:subClassOf :Type .
+
+:Attribute rdf:type owl:Class .
+
+#################################################################
+#    Constraints
+#################################################################
+
+# Constraint: [ a :Branch ] :branch_of_workspace [ a :Workspace ] .
+:branch_of_workspace_shape rdf:type sh:NodeShape ;
+                           sh:targetClass :Branch ;
+                           sh:property [
+                               sh:path :branch_of_workspace ;
+                               sh:class :Workspace 
+                           ] .
+# Constraint: [ a :Namespace ] :namespace_isPartOf_branch [ a :Branch ] .
+:namespace_isPartOf_branch_shape rdf:type sh:NodeShape ;
+                           sh:targetClass :Namespace ;
+                           sh:property [
+                               sh:path :namespace_isPartOf_branch ;
+                               sh:class :Branch 
+                           ] .
+# Constraint: [ a :Type ] :type_isPartOf_branch [ a :Branch ] .
+:type_isPartOf_branch_shape rdf:type sh:NodeShape ;
+                           sh:targetClass :Type ;
+                           sh:property [
+                               sh:path :type_isPartOf_branch ;
+                               sh:class :Branch 
+                           ] .                           
+# Constraint: [ a :Type ] :type_in_namespace [ a :Namespace ] .
+:type_in_namespace_shape rdf:type sh:NodeShape ;
+                           sh:targetClass :Type ;
+                           sh:property [
+                               sh:path :type_in_namespace ;
+                               sh:class :Namespace 
+                           ] .
+# Constraint: [ a :Attribute ] :attribute_isPartOf_branch [ a :Entity ] .
+:attribute_isPartOf_branch_shape rdf:type sh:NodeShape ;
+                           sh:targetClass :Attribute ;
+                           sh:property [
+                               sh:path :attribute_isPartOf_branch ;
+                               sh:class :Branch 
+                           ] .
+# Constraint: [ a :Attribute ] :attribute_isPartOf_complexType [ a :Entity ] .
+:attribute_isPartOf_complexType_shape rdf:type sh:NodeShape ;
+                           sh:targetClass :Attribute ;
+                           sh:property [
+                               sh:path :attribute_isPartOf_complexType ;
+                               sh:class :Entity 
+                           ] .
+# Constraint: [ a :Attribute ] :attribute_isOf_type [ a :DataType ] .
+:attribute_isOf_type_shape rdf:type sh:NodeShape ;
+                           sh:targetClass :Attribute ;
+                           sh:property [
+                               sh:path :attribute_isOf_type ;
+                               sh:class :DataType 
+                           ] .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
